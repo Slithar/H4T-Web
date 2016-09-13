@@ -16,38 +16,34 @@
 
  <style>
      .headerContainer{
-        position: relative;
+        position: absolute;
         width:100%;
         top:0;
         height:70px;
+        background-color: #FCD442;
      }   
-
-     .HeaderNavegacion{
-        position: absolute;  
-        height:100%;
-        width:100%;
-        background-color: #FFF059;
-        border-radius: 0px 0px 15px 15px;
+     .headerCentered{
+        position:relative;
+        width: 1100px;
+        height: 100%;
+        margin: 0px auto;
      }
      .IconPanelLeftSide{
-        top:10%;
-        left:3%;
-        height:80%;
+        height:100%;
         width:10%;
         position:absolute;
-        background-color: white;
      }
      .searcherMiddle{
         top:18px;
         position:absolute;
-        left:18%;
-        width:35%;
+        left:15%;
+        width:50%;
         font-family: verdana;
      }
      .infoRegistroRightSide{
         position:absolute;
-        right:2%;
         top:10%;
+        left: 70%;
         height:80%;
         width:30%;
      }
@@ -56,10 +52,10 @@
         left:5px;
         width:30%;
         height:100%;
-        background-color: grey;
      }
      .registrarseBoton{
-       background-color:#FFF059; 
+       /*background-color:#FFF059;*/
+       background-color:inherit; 
        width:100%;
        height:100%;
        border:0px;
@@ -68,16 +64,16 @@
      }
      .registrarseBoton:hover{
         font-size: 20px;
+        color: black;
      }
      .loginDiv{
         position: absolute;
         left:35%;
         width:30%;
         height:100%;
-        background-color: grey;
      }
      .loginBoton{
-        background-color: #FFF059;
+        background-color: inherit;
         width: 100%;
         height: 100%;
         border: 0px;
@@ -85,16 +81,16 @@
      }
      .loginBoton:hover{
         font-size: 20px;
+        color:black;
      }
      .ayudaBotonDiv{
         position: absolute;
         right:0px;
         height: 100%;
-        width:30%;
-        background-color: grey;  
+        width:30%;  
      }
      .ayudaBoton{
-        background-color: #FFF059;
+        background-color: inherit;
         width: 100%;
         height: 100%;
         border: 0px;
@@ -102,6 +98,7 @@
      }
      .ayudaBoton:hover{
         font-size: 20px;
+        color:black;
      }
     .personalizado{
         width: 25% !important;
@@ -200,41 +197,39 @@
     </div>
     <!-- Fin de la ventana modal para Iniciar Sesión. -->
     <div class="headerContainer">
-        <div id="HeaderNavegacion" class="HeaderNavegacion">
+        <div class="headerCentered">
+            <div class="IconPanelLeftSide" id="iconPanel">
+                <img style='height: 100%; width: 100%; object-fit: contain' src='logo.png'/>                     
+            </div>
 
-        </div>
-        <div class="IconPanelLeftSide" id="iconPanel">
-                Espacio para el logo...
-        </div>
-
-        <div class="searcherMiddle" id="buscadorDiv">
-            <div class="input-group col-md-12">
-            <input type="text" class="form-control" placeholder="Buscar" id="buscarCampo" />
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="button">
-                    <i class="glyphicon glyphicon-search"></i>
-                </button>
-            </span>
+            <div class="searcherMiddle" id="buscadorDiv">
+                <div class="input-group col-md-12">
+                <input type="text" class="form-control" placeholder="Buscar" id="buscarCampo" />
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </span>
+                </div>
+            </div>
+            <div class="infoRegistroRightSide" id="ladoDerechoSignup">
+                <div class="registrarseBotonDiv" id="registrarseBotonDiv">
+                    <button  class="registrarseBoton" id="AbrirModal"><!-- data-toggle="modal" data-target="#modalRegistroUsuario" -->
+                        Sign-up!
+                    </button>
+                </div>
+                <div class="loginDiv" id="ladoDerechoLogin">
+                    <button  class="loginBoton" id="botonLogin">
+                        Login!
+                    </button>
+                </div>
+                <div class="ayudaBotonDiv" id="ayudaBotonDiv">
+                    <button  class="ayudaBoton" onclick="location.href = 'ayuda.jsp'">
+                        Ayuda?
+                    </button>
+                </div>
             </div>
         </div>
-        <div class="infoRegistroRightSide" id="ladoDerechoSignup">
-            <div class="registrarseBotonDiv" id="registrarseBotonDiv">
-                <button  class="registrarseBoton" id="AbrirModal"><!-- data-toggle="modal" data-target="#modalRegistroUsuario" -->
-                    Sign-up!
-                </button>
-            </div>
-            <div class="loginDiv" id="ladoDerechoLogin">
-                <button  class="loginBoton" id="botonLogin">
-                    Login!
-                </button>
-            </div>
-            <div class="ayudaBotonDiv" id="ayudaBotonDiv">
-                <button  class="ayudaBoton" onclick="location.href = 'ayuda.jsp'">
-                    Ayuda?
-                </button>
-            </div>
-        </div>
-        
     </div>
 <script>
     jQuery(document).ready(function($) {
@@ -273,7 +268,7 @@
 <script>
     jQuery(document).ready(function($) {
         $("#buscarCampo").on('focus', function(event) {
-            $(this).attr('placeholder', 'Ingrese un servicio, promoción o categoría para buscar.');
+            $(this).attr('placeholder', 'Servicio, promoción o categoría para buscar....');
         });
         $("#buscarCampo").on('focusout', function(event) {
             $(this).attr('placeholder', 'Buscar');
