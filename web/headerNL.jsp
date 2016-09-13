@@ -21,6 +21,20 @@
         top:0;
         height:70px;
         background-color: #FCD442;
+     }
+     .secondHeader{
+        position: absolute;
+        margin-top:70px;
+        width:100%;
+        height:35px;
+        background-color:#84A8FB;
+     }
+     .secondHeaderCenter{
+        position:relative;
+        margin: auto;
+        width:1100px;
+        height:100%; 
+        border: 1px solid black;
      }   
      .headerCentered{
         position:relative;
@@ -229,6 +243,11 @@
                     </button>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="secondHeader">
+        <div class="secondHeaderCenter">
+            
         </div>
     </div>
 <script>
