@@ -16,25 +16,7 @@
     </head>
     <body>
         <jsp:include page="headerNL.jsp" />
+        <jsp:include page="footer.jsp" />
     </body>
-    <script>
-        $(document).ready(function(){
-            $.ajax({
-                url: 'IniciarSesionServlet',
-                type: 'GET',
-                data: "nombre=pepe",
-                dataType: 'html'
-            })
-            .done(function(response) {
-                console.log(response);
-            })
-            .fail(function() {
-                console.log("error");
-            })
-            .always(function() {
-                console.log("complete");
-            });
-            
-        });
-    </script>
+
 </html>

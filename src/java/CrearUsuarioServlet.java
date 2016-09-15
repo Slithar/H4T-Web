@@ -12,16 +12,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Logica.*;
-import java.sql.SQLException;
-import java.util.Base64;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.*;
 /**
  *
  * @author kapo_
  */
-@WebServlet(urlPatterns = {"/IniciarSesionServlet"})
-public class IniciarSesionServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/CrearUsuarioServlet"})
+public class CrearUsuarioServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,13 +29,12 @@ public class IniciarSesionServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    String id;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         try {
-              
+           
         } finally {
             out.close();
         }
@@ -56,8 +52,7 @@ public class IniciarSesionServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        
+        processRequest(request, response);
     }
 
     /**
@@ -71,33 +66,14 @@ public class IniciarSesionServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-                String psw = request.getParameter("password");
-                
-                String nickname = request.getParameter("nickname");
-                
-                byte[]   bytesEncoded = Base64.getEncoder().encode(psw .getBytes());
-                
-                String EncodedPassword = new String(bytesEncoded);
-                                
-                ControladorClientes ccli = new ControladorClientes();
-                
-                DataCliente dCli = new DataCliente();                
-                try {
-                    dCli = ccli.getClienteByNickname(nickname);
-                } catch (SQLException ex) {
-                    Logger.getLogger(IniciarSesionServlet.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(IniciarSesionServlet.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-                String json;
-                if(EncodedPassword.equals(dCli.getPassword())){
-                    json = "{\"validacion\":true}";
-                }
-                else
-                    json = "{\"validacion\":false}";
-                response.getWriter().println(json);
+            //nickname=Slithar&nombre=Mauro&apellido=Curbelo&email=mauro%40gmail.com&password1=fefe&password2=fefe
+            String nickname = request.getParameter("nickname");
+            String nombre = request.getParameter("nombre");
+            String apellido = request.getParameter("apellido");
+            String email = request.getParameter("email");
+            String password = request.getParameter("password1");
+            
+            
     }
 
     /**

@@ -136,32 +136,32 @@
                 <form id="formSignup" action="signup.jsp" method="GET">
                     <div class="form-group has-feedback" id="nicknameDiv">
                         <label for="nickname"> Ingrese su Nickname</label>
-                        <input class="form-control" type="text" id="nickname" placeholder="JPerez9">
+                        <input class="form-control" type="text" id="nickname" name="nickname" placeholder="JPerez9">
                         <i class="glyphicon glyphicon-question-sign form-control-feedback"></i>
                     </div>
                     <div class="form-group has-feedback">
                         <label for="nombre">Ingrese su Nombre</label>
-                        <input class="form-control" type="text" id="nombre" placeholder="José">
+                        <input class="form-control" type="text" id="nombre" name="nombre" placeholder="José">
                         <i class="glyphicon glyphicon-user form-control-feedback"></i>
                     </div>
                     <div class="form-group has-feedback">
                         <label for="apellido">Ingrese su Apellido</label>
-                        <input class="form-control" type="text" id="apellido" placeholder="Perez">
+                        <input class="form-control" type="text" id="apellido" name="apellido" placeholder="Perez">
                         <i class="glyphicon glyphicon-user form-control-feedback"></i>
                     </div>
                     <div class="form-group has-feedback">
                         <label for="email">Ingrese su E-mail</label>
-                        <input class="form-control" type="email" id="email" placeholder="jose@gmail.com">
+                        <input class="form-control" type="email" id="email" name="email" placeholder="jose@gmail.com">
                         <i class="glyphicon glyphicon-envelope form-control-feedback"></i>
                     </div>
                     <div class="form-group has-feedback">
                         <label for="password1">Ingrese su password</label>
-                        <input class="form-control" type="password" id="password1" placeholder="*******">
+                        <input class="form-control" type="password" id="password1" name="password1" placeholder="*******">
                         <i class="glyphicon glyphicon-lock form-control-feedback"></i>
                     </div>
                     <div class="form-group has-feedback">    
                         <label for="password2">Repita la password</label>
-                        <input class="form-control" type="password" id="password2" placeholder="*******">
+                        <input class="form-control" type="password" id="password2" name="password2" placeholder="*******">
                         <i class="glyphicon glyphicon-lock form-control-feedback"></i>
                     </div>
                     <center><input type="submit" id="enviarFormNuevoUsuario" value="Registrarme!" class="btn btn-primary"></center>
@@ -191,12 +191,12 @@
                 <form id="formLogin" action="login.jsp" method="GET">
                     <div class="form-group has-feedback" id="nicknameDiv">
                         <label for="nickname">Nicknam</label>
-                        <input class="form-control" type="text" id="nicknameLogin">
+                        <input class="form-control" type="text" id="nicknameLogin" name="nickname">
                         <i class="glyphicon glyphicon-user form-control-feedback"></i>
                     </div>
                     <div class="form-group has-feedback">
                         <label for="nombre">Password</label>
-                        <input class="form-control" type="password" id="passwordLogin">
+                        <input class="form-control" type="password" id="passwordLogin" name="password">
                         <i class="glyphicon glyphicon-eye-open form-control-feedback"></i>
                     </div>
                     <center><input type="submit" id="enviarFormIniciarSesion" value="Iniciar Sesión!" class="btn btn-primary"></center>
@@ -212,7 +212,7 @@
     <!-- Fin de la ventana modal para Iniciar Sesión. -->
     <div class="headerContainer">
         <div class="headerCentered">
-            <div class="IconPanelLeftSide" id="iconPanel">
+            <div onclick="location.href='index.jsp'" class="IconPanelLeftSide" id="iconPanel">
                 <img style='height: 100%; width: 100%; object-fit: contain' src='logo.png'/>                     
             </div>
 
@@ -228,7 +228,7 @@
             </div>
             <div class="infoRegistroRightSide" id="ladoDerechoSignup">
                 <div class="registrarseBotonDiv" id="registrarseBotonDiv">
-                    <button  class="registrarseBoton" id="AbrirModal"><!-- data-toggle="modal" data-target="#modalRegistroUsuario" -->
+                    <button  class="registrarseBoton" id="AbrirModalRegistro">
                         Sign-up!
                     </button>
                 </div>
@@ -263,19 +263,7 @@
 </script>
 <script>
     jQuery(document).ready(function($) {
-        $("#enviarFormIniciarSesion").on('click', function(event) {
-            event.preventDefault();
-            $("#formLogin *").filter(":input[type!=submit]").each(function(){
-                if($(this).val()==""){
-                    $(this).parent().addClass('has-error');
-                }
-            });
-        });
-    });
-</script>
-<script>
-    jQuery(document).ready(function($) {
-        $("#AbrirModal").on('click', function(event) {
+        $("#AbrirModalRegistro").on('click', function(event) {
             $("#modalRegistroUsuario").modal({
                 backdrop: "static",
                 keyboard: false,
@@ -305,38 +293,71 @@ jQuery(document).ready(function($) {
     });
 });
 </script>
-
-<script>
-jQuery(document).ready(function($) {
-    $("#modalLogin").on('hidden.bs.modal', function () {
-        $("#formLogin *").filter(":input[type!=submit]").each(function() {
-                $(this).parent().removeClass('has-error');
-                $(this).parent().removeClass('has-success');            
-                $(this).val("");
-        });
-    });
-});
-</script>
-
 <script>
     $("#enviarFormNuevoUsuario").click(function(event){
         var error = false;
         event.preventDefault();
-        $("#formSignup *").filter(":input[type!=submit]").each(function() {
+        $("#formSignup *").filter(":input").each(function() {
+            $(this).parent().removeClass('has-error');
             if($(this).val()==""){
                 $(this).parent().addClass('has-error');
                 error = true;
             }
         });
+        if($("#password1").val()!=$("#password2").val()){
+            error = true;
+            $("#password2").parent().addClass('has-error');
+            $("#password1").parent().addClass('has-error');
+        }
+        if(error == false){
+            var data = $("#formSignup").serialize();
+            console.log(data);
+            /*$.ajax({
+                url: 'CrearUsuarioServlet',
+                type: 'POST',
+                dataType: 'JSON',
+                data: data,
+            })
+            .done(function(response){
+
+            });*/
+
+        }
     });
 </script> 
 <script>
-    jQuery(document).ready(function($) {
-        $("#iconPanel").on('click', function(event) {
-            event.preventDefault();
-            window.location = "index.jsp";
+$(document).ready(function(){
+    $("#enviarFormIniciarSesion").on('click', function(event) {
+        event.preventDefault();
+        var error = false;
+        $("#formLogin").find(':input').each(function(index, el) {
+            $(this).parent().removeClass("has-error");
+            if($(this).val()==""){
+                $(this).parent().addClass('has-error');
+                error = true;
+            }
         });
-    });
+        if(error == false){
+            datos=$("#formLogin").serialize();
+            $.ajax({
+                url: 'IniciarSesionServlet',
+                type: 'POST',
+                data: datos,
+                dataType: 'JSON',
+            })
+            .done(function(response) {
+                if(!!response.validacion){
+                    window.location.reload();
+                }
+                else{
+                    alert("Contraseña incorrecta");
+                }
+            });
+        }
+        else
+            return 0;
+    });       
+});
 </script>
 </body>
 </html>
