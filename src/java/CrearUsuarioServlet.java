@@ -12,7 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Logica.*;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author kapo_
@@ -66,14 +70,28 @@ public class CrearUsuarioServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            //nickname=Slithar&nombre=Mauro&apellido=Curbelo&email=mauro%40gmail.com&password1=fefe&password2=fefe
             String nickname = request.getParameter("nickname");
             String nombre = request.getParameter("nombre");
             String apellido = request.getParameter("apellido");
             String email = request.getParameter("email");
             String password = request.getParameter("password1");
-            
-            
+            String fecha = request.getParameter("fechaNacimiento");
+            String [] fechaPartida = new String[3];
+            fechaPartida = fecha.split("/");
+            LocalDate fechaNac = LocalDate.of(Integer.parseInt(fechaPartida[2]),Integer.parseInt(fechaPartida[0]) ,Integer.parseInt(fechaPartida[1]));
+            System.out.println(fechaNac);
+            ControladorClientes iccli = new ControladorClientes();
+            String json;
+            try {    
+                iccli.agregarCliente(nickname, nombre, apellido, email, fechaNac, "src/Logica/perfiles/perfil.PNG", password);
+                json = "{\"agregado\":true}";
+            } catch (SQLException ex) {
+                json = "{\"agregado\":false}";
+            } catch (ClassNotFoundException ex) {
+                json = "{\"agregado\":false}";
+            }
+            response.getWriter().println(json);
+        
     }
 
     /**

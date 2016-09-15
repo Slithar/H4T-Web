@@ -13,5 +13,7 @@
     </head>
     <body>
         <jsp:include page="headerNL.jsp" />
+        <jsp:include page="footer.jsp" />
+
     </body>
 </html>

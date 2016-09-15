@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpSession;
 /**
  *
  * @author kapo_
@@ -92,7 +93,9 @@ public class IniciarSesionServlet extends HttpServlet {
                 }
                 
                 String json;
+                HttpSession session = request.getSession();
                 if(EncodedPassword.equals(dCli.getPassword())){
+                    session.setAttribute("Nickname",dCli.getNickname());
                     json = "{\"validacion\":true}";
                 }
                 else

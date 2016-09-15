@@ -9,8 +9,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="css/bootstrap.css" type="text/css" rel="stylesheet">
+        <link href="jquery-ui.min.css" type="text/css" rel="stylesheet">
         <script src="js/jquery-3.1.0.js"></script>
+        <script src="jquery-ui.min.js"></script>
+        <link href="css/bootstrap.css" type="text/css" rel="stylesheet">
         <script src="js/bootstrap.js"></script>
         <title>JSP Page</title>
 
@@ -68,7 +70,6 @@
         height:100%;
      }
      .registrarseBoton{
-       /*background-color:#FFF059;*/
        background-color:inherit; 
        width:100%;
        height:100%;
@@ -153,6 +154,11 @@
                         <label for="email">Ingrese su E-mail</label>
                         <input class="form-control" type="email" id="email" name="email" placeholder="jose@gmail.com">
                         <i class="glyphicon glyphicon-envelope form-control-feedback"></i>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <label for="fechaNacimiento">Fecha de Nacimiento</label>
+                        <input type="text" id="fechaNacimiento" name="fechaNacimiento" class="form-control" placeholder="30/08/1990">
+                        <i class="glyphicon glyphicon-calendar form-control-feedback"></i> 
                     </div>
                     <div class="form-group has-feedback">
                         <label for="password1">Ingrese su password</label>
@@ -251,6 +257,16 @@
         </div>
     </div>
 <script>
+$(document).ready(
+    function () {
+    var $j = jQuery.noConflict();
+    $("#fechaNacimiento" ).datepicker({
+      changeMonth: true,
+      changeYear: true
+    });
+  }
+
+);
     jQuery(document).ready(function($) {
         $("#ladoDerechoLogin").on('click', function(event) {
             $("#modalLogin").modal({
@@ -312,15 +328,21 @@ jQuery(document).ready(function($) {
         if(error == false){
             var data = $("#formSignup").serialize();
             console.log(data);
-            /*$.ajax({
+            $.ajax({
                 url: 'CrearUsuarioServlet',
                 type: 'POST',
                 dataType: 'JSON',
                 data: data,
             })
             .done(function(response){
-
-            });*/
+                console.log(response);
+                if(!!response.agregado==true){
+                    window.location.reload();
+                }
+                else{
+                    alert("Well shit.");
+                }
+            });
 
         }
     });
