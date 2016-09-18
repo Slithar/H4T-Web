@@ -15,8 +15,8 @@
         <title>Help 4 traveling</title>
     </head>
     <body>
-        <jsp:include page="pages/headerNL.jsp" />
-        <jsp:include page="pages/footer.jsp" />
+        <jsp:include page="headerNL.jsp" />
+        <jsp:include page="footer.jsp" />
     </body>
 
 </html>

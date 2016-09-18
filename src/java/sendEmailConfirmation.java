@@ -11,18 +11,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import Logica.*;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Properties;
+import javax.mail.*;
+import javax.mail.internet.*;
 /**
  *
  * @author kapo_
  */
-@WebServlet(urlPatterns = {"/CrearUsuarioServlet"})
-public class CrearUsuarioServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/sendEmailConfirmation"})
+public class sendEmailConfirmation extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,13 +32,9 @@ public class CrearUsuarioServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("application/json");
+        response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        try {
-           
-        } finally {
-            out.close();
-        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -56,7 +49,42 @@ public class CrearUsuarioServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+                final String username = "help4traveling.noreply@gmail.com";
+                final String password = "help4traveling";
+                final String emailTo = request.getParameter("emailTo");
+                String mensaje;
+                Properties props = new Properties();
+                props.put("mail.smtp.auth", "true");
+                props.put("mail.smtp.starttls.enable", "true");
+                props.put("mail.smtp.host", "smtp.gmail.com");
+                props.put("mail.smtp.port", "587");
+
+                Session session = Session.getInstance(props,
+                        new javax.mail.Authenticator() {
+                            protected PasswordAuthentication getPasswordAuthentication() {
+                                return new PasswordAuthentication(username, password);
+                            }
+                        });
+
+                try {
+
+                    Message message = new MimeMessage(session);
+                    message.setFrom(new InternetAddress("help4traveling.noreply@gmail.com"));
+                    message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(emailTo));
+                    message.setSubject("Nueva Cuenta Help4traveling");
+                    mensaje = "Gracias por crearse una cuenta en el sistema Help4Traveling.";
+                    mensaje += "\nPara poder acceder a su cuenta primero deberá confirmar su direcciónde E-Mail.";
+                    mensaje += "\nPor favor haga click en en siguiente enlace para llevar a cabo la confirmación.";
+                    message.setText(mensaje);
+
+                    Transport.send(message);
+
+                    System.out.println("Done");
+
+                } catch (MessagingException e) {
+                    throw new RuntimeException(e);
+                }
     }
 
     /**
@@ -70,32 +98,7 @@ public class CrearUsuarioServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            String nickname = request.getParameter("nickname");
-            String nombre = request.getParameter("nombre");
-            String apellido = request.getParameter("apellido");
-            String email = request.getParameter("email");
-            String password = request.getParameter("password1");
-            String fecha = request.getParameter("fechaNacimiento");
-            
-            byte[]   bytesEncoded = Base64.getEncoder().encode(password .getBytes());
-                
-            String EncodedPassword = new String(bytesEncoded);
-            
-            String [] fechaPartida = new String[3];
-            fechaPartida = fecha.split("/");
-            LocalDate fechaNac = LocalDate.of(Integer.parseInt(fechaPartida[2]),Integer.parseInt(fechaPartida[0]) ,Integer.parseInt(fechaPartida[1]));
-            ControladorClientes iccli = new ControladorClientes();
-            String json;
-            try {    
-                iccli.agregarCliente(nickname, nombre, apellido, email, fechaNac, "src/Logica/perfiles/perfil.PNG", EncodedPassword);
-                json = "{\"agregado\":true}";
-            } catch (SQLException ex) {
-                json = "{\"agregado\":false}";
-            } catch (ClassNotFoundException ex) {
-                json = "{\"agregado\":false}";
-            }
-            response.getWriter().println(json);
-        
+        processRequest(request, response);
     }
 
     /**

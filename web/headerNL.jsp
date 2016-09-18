@@ -9,6 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
         <link href="jquery-ui.min.css" type="text/css" rel="stylesheet">
         <script src="js/jquery-3.1.0.js"></script>
         <script src="jquery-ui.min.js"></script>
@@ -28,15 +29,18 @@
         position: absolute;
         margin-top:70px;
         width:100%;
-        height:35px;
+        height:36px;
         background-color:#84A8FB;
+     }
+     .secondHeaderButton{
+        background-color:inherit;
+        border:0px;
      }
      .secondHeaderCenter{
         position:relative;
         margin: auto;
         width:1100px;
-        height:100%; 
-        border: 1px solid black;
+        height:100%;
      }   
      .headerCentered{
         position:relative;
@@ -253,7 +257,14 @@
     </div>
     <div class="secondHeader">
         <div class="secondHeaderCenter">
-            
+            <table style="width:100%;height:100%;">
+                <tr align="middle">
+                    <td style="width:25%;height:100%;"><button class="secondHeaderButton">Hoteles <i class="fa fa-bed" aria-hidden="true"></i></button></td>
+                    <td style="width:25%;height:100%;"><button class="secondHeaderButton">Taxi <i class="fa fa-taxi" aria-hidden="true"></i></button></td>
+                    <td style="width:25%;height:100%;"><button class="secondHeaderButton">Vuelos <i class="fa fa-plane" aria-hidden="true"></i></button></td>
+                    <td style="width:25%;height:100%;"><button class="secondHeaderButton">Reservas <i class="fa fa-calendar" aria-hidden="true"></i></button></td>
+                </tr>
+            </table>
         </div>
     </div>
 <script>
@@ -335,17 +346,24 @@ jQuery(document).ready(function($) {
                 data: data,
             })
             .done(function(response){
-                console.log(response);
                 if(!!response.agregado==true){
+                    console.log($("#email").val());
+                    $.ajax({
+                        url: 'sendEmailConfirmation',
+                        type: 'GET',
+                        data: "emailTo="+$("#email").val()
+                    })
+                    .done(function(){
+
+                    });
                     window.location.reload();
                 }
                 else{
                     alert("Well shit.");
                 }
             });
-
         }
-    });
+    });    
 </script> 
 <script>
 $(document).ready(function(){
