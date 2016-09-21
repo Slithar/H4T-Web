@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Properties;
+import java.util.UUID;
 import javax.mail.*;
 import javax.mail.internet.*;
 /**
@@ -52,6 +53,15 @@ public class sendEmailConfirmation extends HttpServlet {
                 final String username = "help4traveling.noreply@gmail.com";
                 final String password = "help4traveling";
                 final String emailTo = request.getParameter("emailTo");
+                final String nickname = request.getParameter("nickname");
+                
+                        
+                String uuid = UUID.randomUUID().toString();
+                
+                String str;
+                
+                str = uuid.replace("-", "");
+                
                 String mensaje;
                 Properties props = new Properties();
                 props.put("mail.smtp.auth", "true");
@@ -67,7 +77,7 @@ public class sendEmailConfirmation extends HttpServlet {
                         });
 
                 try {
-
+                    String link =""; 
                     Message message = new MimeMessage(session);
                     message.setFrom(new InternetAddress("help4traveling.noreply@gmail.com"));
                     message.setRecipients(Message.RecipientType.TO,
@@ -76,6 +86,7 @@ public class sendEmailConfirmation extends HttpServlet {
                     mensaje = "Gracias por crearse una cuenta en el sistema Help4Traveling.";
                     mensaje += "\nPara poder acceder a su cuenta primero deberá confirmar su direcciónde E-Mail.";
                     mensaje += "\nPor favor haga click en en siguiente enlace para llevar a cabo la confirmación.";
+                    mensaje += "\nhttp://localhost:8080/h4t/activar.jsp?activation="+str+"&user="+nickname;
                     message.setText(mensaje);
 
                     Transport.send(message);

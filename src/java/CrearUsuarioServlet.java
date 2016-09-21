@@ -70,6 +70,7 @@ public class CrearUsuarioServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
             String nickname = request.getParameter("nickname");
             String nombre = request.getParameter("nombre");
             String apellido = request.getParameter("apellido");

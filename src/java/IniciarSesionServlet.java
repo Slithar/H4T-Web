@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.UUID;
 import javax.servlet.http.HttpSession;
 /**
  *
@@ -72,7 +73,8 @@ public class IniciarSesionServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
+                
                 String psw = request.getParameter("password");
                 
                 String nickname = request.getParameter("nickname");
