@@ -34,6 +34,7 @@
         border-radius: 50%;
         background-color: black;
         -webkit-transition: width 0.1s, height 0.3s, border-radius 0.1s, bottom 0.1s, right 0.2s;
+        z-index: 10;
     }
 </style>
 </head>

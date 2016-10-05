@@ -15,6 +15,46 @@
         <script src="jquery-ui.min.js"></script>
         <link href="css/bootstrap.css" type="text/css" rel="stylesheet">
         <script src="js/bootstrap.js"></script>
+        <script>
+            jQuery(document).ready(function($){
+                //alert("hola");
+                $.ajax({
+                   url : 'SimulacionLogeoServlet',
+                   type : 'POST',
+                   data: {"logueado" : "si",
+                            "nick" : "oWood"}                   
+                   
+                });
+                //alert("llegue");
+                
+               $.ajax({
+                   url : 'DatosLogueadoServlet',
+                   type : 'POST',
+                   success : function(response){
+                       //alert(response);
+                       $('.infoLogueado label').text(response);
+                       $('.imgPerfil').attr('src', './perfiles/' + response + '.jpg');
+                   },
+                   error : function(object, error, resp){
+                       alert("error! " + resp);
+                   }
+               }); 
+               
+               var activo = false;
+               $('.infoLogueado').on('click', function(){
+                   if(!activo){
+                       $('.opcionesLogueado').fadeIn();
+                       activo = true;
+                   }
+                   else{
+                       $('.opcionesLogueado').fadeOut();
+                       activo = false;
+                   }
+                    
+                
+               });
+            });
+        </script>
         <title>JSP Page</title>
 
  <style>
@@ -79,11 +119,11 @@
        height:100%;
        border:0px;
        color: grey;
-       outline:0;
 
      }
      .registrarseBoton:hover{
-        color: white;
+        font-size: 20px;
+        color: black;
      }
      .loginDiv{
         position: absolute;
@@ -97,16 +137,17 @@
         height: 100%;
         border: 0px;
         color: grey;
-        outline: 0;
      }
      .loginBoton:hover{
-        color:white;
+        font-size: 20px;
+        color:black;
      }
      .ayudaBotonDiv{
         position: absolute;
         right:0px;
         height: 100%;
-        width:30%;  
+        width:30%;
+        top: .5%;
      }
      .ayudaBoton{
         background-color: inherit;
@@ -114,49 +155,16 @@
         height: 100%;
         border: 0px;
         color: grey;
-        outline:0;
+        outline: 0;
      }
      .ayudaBoton:hover{
-        color:white;
+        color: white;
      }
     .personalizado{
         width: 25% !important;
     }
     #iconPanel:hover{
         cursor: pointer;
-    }
-    
-    .menuPrincipal{
-        list-style: none;
-        /*border: 1px solid black;*/
-    }
-    
-    .submenuPrincipal{
-        float: left;
-        width: 13.7%;
-        box-sizing: border-box;
-    }
-    
-    .submenuPrincipal a{
-        color: white;
-        text-decoration: none;
-        display:block;
-        /*font-weight: bold;*/
-        padding: 0px 12px;
-        height: 10px;
-        text-align: center;
-        box-sizing: border-box;
-    }
-    
-    .submenuPrincipal a:hover{
-        /*background-color: #A5BEF7;*/
-        text-decoration: none;
-        cursor: pointer;
-        color: #EBFB87;
-    }
-    
-    .submenuPrincipal i{
-        margin-right: 10px;
     }
     
     .menuPrincipal{
@@ -255,70 +263,13 @@
     body{
         background: url(./images/fondo.png);
     }
+    
  </style>
 </head>
 <body>
-    <!-- Modal para registrarse -->
-    <div id="modalRegistroUsuario" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <!-- Contenido del modal -->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <center><h4 class="modal-title">Ingresar nuevo usuario</h4></center>
-            </div>
-            <div class="modal-body">
-                <form id="formSignup" action="signup.jsp" method="GET">
-                    <div class="form-group has-feedback" id="nicknameDiv">
-                        <label for="nickname"> Ingrese su Nickname</label>
-                        <input class="form-control" type="text" id="nickname" name="nickname" placeholder="JPerez9">
-                        <i class="glyphicon glyphicon-question-sign form-control-feedback"></i>
-                    </div>
-                    <div class="form-group has-feedback">
-                        <label for="nombre">Ingrese su Nombre</label>
-                        <input class="form-control" type="text" id="nombre" name="nombre" placeholder="José">
-                        <i class="glyphicon glyphicon-user form-control-feedback"></i>
-                    </div>
-                    <div class="form-group has-feedback">
-                        <label for="apellido">Ingrese su Apellido</label>
-                        <input class="form-control" type="text" id="apellido" name="apellido" placeholder="Perez">
-                        <i class="glyphicon glyphicon-user form-control-feedback"></i>
-                    </div>
-                    <div class="form-group has-feedback">
-                        <label for="email">Ingrese su E-mail</label>
-                        <input class="form-control" type="email" id="email" name="email" placeholder="jose@gmail.com">
-                        <i class="glyphicon glyphicon-envelope form-control-feedback"></i>
-                    </div>
-                    <div class="form-group has-feedback">
-                        <label for="fechaNacimiento">Fecha de Nacimiento</label>
-                        <input type="text" id="fechaNacimiento" name="fechaNacimiento" class="form-control" placeholder="30/08/1990">
-                        <i class="glyphicon glyphicon-calendar form-control-feedback"></i> 
-                    </div>
-                    <div class="form-group has-feedback">
-                        <label for="password1">Ingrese su password</label>
-                        <input class="form-control" type="password" id="password1" name="password1" placeholder="*******">
-                        <i class="glyphicon glyphicon-lock form-control-feedback"></i>
-                    </div>
-                    <div class="form-group has-feedback">    
-                        <label for="password2">Repita la password</label>
-                        <input class="form-control" type="password" id="password2" name="password2" placeholder="*******">
-                        <i class="glyphicon glyphicon-lock form-control-feedback"></i>
-                    </div>
-                    <center><input type="submit" id="enviarFormNuevoUsuario" value="Registrarme!" class="btn btn-primary"></center>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-
-      </div>
-    </div>
-    <!-- Fin de la ventana modal para registrar usuario -->
-    <!-- Inicio de la ventana Modal para Iniciar Sesión. -->
-
+    
     <!-- Modal -->
-    <div id="modalLogin" class="modal fade" role="dialog">
+    <div id="modalPerfil" class="modal fade" role="dialog">
       <div class="modal-dialog personalizado">
 
         <!-- Modal content-->
@@ -367,16 +318,23 @@
                 </div>
             </div>
             <div class="infoRegistroRightSide" id="ladoDerechoSignup">
-                <div class="registrarseBotonDiv" id="registrarseBotonDiv">
-                    <button  class="registrarseBoton" id="AbrirModalRegistro">
-                        <span class = "fa fa-user-plus"></span>&nbsp;&nbsp;Sign-up
-                    </button>
-                </div>
-                <div class="loginDiv" id="ladoDerechoLogin">
-                    <button  class="loginBoton" id="botonLogin">
-                        <span class = "fa fa-unlock"></span>&nbsp;&nbsp;Login
-                    </button>
-                </div>
+                <ul class ="lstLogueado">
+                    <li>
+                        <div class = "infoLogueado">
+                            <img src = "images/perfil.png" class = "imgPerfil"></img>
+                            <label>Roccma</label>
+                            &nbsp;&nbsp;
+                            <span class="fa fa-angle-down" id = "btnVerMasPerfil"></span>
+                        </div>
+                        <ul class = "opcionesLogueado">
+                            <li><span class = "	fa fa-user"></span>&nbsp;&nbsp;Ver perfil</li>
+                            <li><span class = "fa fa-unlock-alt"></span>&nbsp;&nbsp;Cerrar sesi&oacute;n</li>
+                        </ul>
+                    </li>
+                    
+                        
+                </ul>
+                
                 <div class="ayudaBotonDiv" id="ayudaBotonDiv">
                     <button  class="ayudaBoton" onclick="location.href = 'ayuda.jsp'">
                         <span class = "fa fa-question-circle"></span>&nbsp;&nbsp;Ayuda
@@ -392,7 +350,7 @@
                 <!--li class = "submenuPrincipal"><a href = " alogajiento.mostrar("alojamientos"); -->
                 <li class = "submenuPrincipal"><a href = "VerServiciosServlet?categoria=Alojamientos"><i class="fa fa-bed" aria-hidden="true"> </i>&nbsp;Servicios</a></li>
                 <li class = "submenuPrincipal"><a href = "verReserva.jsp"><i class="fa fa-calendar" aria-hidden="true"> </i>&nbsp;Reservas</a></li>
-                <li class = "submenuPrincipal"><a href = "#"><i class="fa fa-shopping-bag" aria-hidden="true"> </i>&nbsp;Promociones</a></li>
+                <li class = "submenuPrincipal"><a href = "VerPromosServlet"><i class="fa fa-shopping-bag" aria-hidden="true"> </i>&nbsp;Promociones</a></li>
             </ul>
         </div>
     </div>

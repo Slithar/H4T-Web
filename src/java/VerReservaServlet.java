@@ -36,8 +36,8 @@ public class VerReservaServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
-        HttpSession session=request.getSession(true);
-        session.setAttribute("nick", "eWatson");
+        HttpSession session=request.getSession();
+        //session.setAttribute("nick", "eWatson");
         IControladorClientes iccli = new ControladorClientes();
         String resultado= "";
         if(request.getParameter("operacion").equals("tablaReservas")){

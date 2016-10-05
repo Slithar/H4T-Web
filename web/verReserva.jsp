@@ -168,7 +168,7 @@
     </head>
     <body>
             
-            <jsp:include page="headerNL.jsp" />
+            <jsp:include page="headerL.jsp" />
             <div class="contenedorReserva" > 
                 <table class="tablaRes">
                     <thead>

@@ -12,6 +12,16 @@
         <link href="css/bootstrap.css" type="text/css" rel="stylesheet">
         <script src="js/jquery-3.1.0.js"></script>
         <script src="js/bootstrap.js"></script>
+        <script>
+            jQuery(document).ready(function($){
+               $.ajax({
+                   url : 'SimulacionLogueoServlet',
+                   type : 'POST',
+                   data : {'logueado' : 'si',
+                            'nick' : 'eWatson'}
+               }); 
+            });
+        </script>
         <title>Help 4 traveling</title>
     </head>
     <body>
