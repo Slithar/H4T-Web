@@ -346,7 +346,7 @@
     <div class="secondHeader">
         <div class="secondHeaderCenter">
             <ul class = "menuPrincipal">
-                <li class = "submenuPrincipal"><a href = "#"><i class="fa fa-truck" aria-hidden="true"> </i>&nbsp;Proveedores</a></li>
+                <li class = "submenuPrincipal"><a href = "verProveedoresServlet"><i class="fa fa-truck" aria-hidden="true"> </i>&nbsp;Proveedores</a></li>
                 <!--li class = "submenuPrincipal"><a href = " alogajiento.mostrar("alojamientos"); -->
                 <li class = "submenuPrincipal"><a href = "VerServiciosServlet?categoria=Alojamientos"><i class="fa fa-bed" aria-hidden="true"> </i>&nbsp;Servicios</a></li>
                 <li class = "submenuPrincipal"><a href = "verReserva.jsp"><i class="fa fa-calendar" aria-hidden="true"> </i>&nbsp;Reservas</a></li>
